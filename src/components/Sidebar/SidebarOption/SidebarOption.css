@@ -17,7 +17,8 @@
 .sidebarOption--active > h3  {
     color: #c04b37;
     background-color: #fcecec;
-    font-weight: 800 !important;
+    font-weight: 700 !important;
+    transition: .3s ease;
 }
 
 .sidebarOption > .MuiSvg-root {
