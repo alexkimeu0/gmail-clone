@@ -1,5 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { selectUser, login } from './features/userSlice'
+
+import { auth } from './firebase';
+
 import Login from './components/Login/Login'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -11,13 +15,25 @@ import Sidebar from './components/Sidebar/Sidebar'
 import Mail from './components/Mail/Mail'
 import MailList from './components/MailList/MailList'
 import SendMail from './components/SendMail/SendMail'
-import { selectUser } from './features/userSlice'
 
 import './App.css';
 
 const App = () => {  
   const sendMailOpen = useSelector(selectSendMailOpen)
   const user = useSelector(selectUser)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        dispatch(login({
+          displayName: user.displayName,
+          email: user.email,
+          photoUrl: user.photoURL
+        }))        
+      }
+    })
+  }, [])
 
   return (
     <Router>
