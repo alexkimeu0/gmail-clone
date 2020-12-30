@@ -22,3 +22,7 @@
     z-index: 999;
     display: flex;
 }
+
+.mailList__list {
+    padding-bottom: 20%;
+}

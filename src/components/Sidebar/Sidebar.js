@@ -1,4 +1,7 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { openSendMail } from '../../features/mailSlice'
+
 import SidebarOption from './SidebarOption/SidebarOption'
 
 import { Button, IconButton } from '@material-ui/core'
@@ -19,11 +22,14 @@ import './Sidebar.css'
 
 
 const Sidebar = () => {
+    const dispatch = useDispatch()
+
     return (
         <div className="sidebar">
             <Button 
                 className="sidebar__compose" 
                 startIcon={<AddIcon />}
+                onClick={() => dispatch(openSendMail())}
             >
                 Compose
             </Button>    

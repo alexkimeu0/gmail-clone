@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Section from './Section/Section'
 import MailRow from './MailRow/MailRow'
 
+import { db } from '../../firebase'
 
 import { Checkbox, IconButton } from '@material-ui/core'
 
@@ -21,6 +22,18 @@ import './MailList.css'
 
 
 const MailList = () => {
+
+    const [emails, setEmails] = useState([])
+
+    useEffect(() => {
+        db.collection('emails').orderBy('timestamp', 'desc').onSnapshot(
+            snapshot => setEmails(snapshot.docs.map(doc => ({
+                id: doc.id,
+                data: doc.data()
+            })))
+        )
+    }, [])
+    
     return (
         <div className="mailList">
             <div className="mailList__settings">
@@ -61,60 +74,16 @@ const MailList = () => {
             </div>
 
             <div className="mailList__list">
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
-                <MailRow
-                    title="Website"
-                    subject="Library Website"
-                    description="Yoyomao! Before I peace out, can we get the Library site rolling first thing tomorrow?"
-                    time="10pm"
-                />
+                {emails.map(({id, data: { to, subject, message, timestamp } }) => (
+                    <MailRow
+                        id={id}
+                        key={id}
+                        title={to}
+                        subject={subject}
+                        description={message}
+                        time={new Date(timestamp?.seconds * 1000).toUTCString()}
+                    />
+                ))}
             </div>
         </div>
     )
