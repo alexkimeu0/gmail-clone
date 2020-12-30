@@ -19,12 +19,8 @@ function App() {
           <Sidebar />
 
           <Switch>
-            <Route path="/">
-              <MailList />
-            </Route>
-            <Route path="/mail">
-              <Mail />
-            </Route>
+            <Route path="/" exact component={MailList} />
+            <Route path="/mail" exact component={Mail} />
           </Switch>
 
         </div>
