@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { openSendMail } from '../../features/mailSlice'
+
 import Section from './Section/Section'
 import MailRow from './MailRow/MailRow'
 
 import { db } from '../../firebase'
 
-import { Checkbox, IconButton } from '@material-ui/core'
+import { Checkbox, IconButton, Button } from '@material-ui/core'
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import RedoIcon from '@material-ui/icons/Redo'
@@ -16,14 +19,15 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import InboxIcon from '@material-ui/icons/Inbox'
 import PeopleIcon from '@material-ui/icons/People'
 import LocalOfferIcon from '@material-ui/icons/LocalOffer'
+import AddIcon from '@material-ui/icons/Add'
 
 
 import './MailList.css'
 
 
 const MailList = () => {
-
     const [emails, setEmails] = useState([])
+    const dispatch = useDispatch()
 
     useEffect(() => {
         db.collection('emails').orderBy('timestamp', 'desc').onSnapshot(
@@ -71,6 +75,15 @@ const MailList = () => {
                 <Section Icon={InboxIcon} title="Primary" color="red" selected /> 
                 <Section Icon={PeopleIcon} title="Social" color="#1A73E8" /> 
                 <Section Icon={LocalOfferIcon} title="Promotions" color="green" /> 
+
+                <Button 
+                    className="mailList__compose" 
+                    startIcon={<AddIcon />}
+                    onClick={() => dispatch(openSendMail())}
+                >
+                    Compose
+            </Button>
+                
             </div>
 
             <div className="mailList__list">

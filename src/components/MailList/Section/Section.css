@@ -8,6 +8,17 @@
     border-width: 0 !important;
 }
 
+@media(max-width: 960px){
+    .section {
+        display: none !important;
+    }
+
+    .section--selected {
+        display: flex !important;
+        align-items: center !important;
+    }
+}
+
 .section:hover {
     background-color: whitesmoke;
     transition: .3s ease;

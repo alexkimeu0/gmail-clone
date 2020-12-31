@@ -21,6 +21,12 @@
     flex: .2;
 }
 
+@media(max-width: 900px){
+    .mailRow__title {
+        display: none;
+    }
+}
+
 .mailRow__message {
     display: flex;
     flex: .8;
@@ -45,4 +51,10 @@
     padding-right: 15px;
     font-size: 9px;
     font-weight: bold;
+}
+
+@media(max-width: 700px){
+    .mailRow__time {
+        display: none;
+    }
 }

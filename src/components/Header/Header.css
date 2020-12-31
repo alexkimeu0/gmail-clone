@@ -10,6 +10,12 @@
     align-items: center;
 }
 
+@media(max-width: 960px){
+    .header__left{
+        display: none;
+    }
+}
+
 .header__left > img {
     object-fit: contain;
     height: 80px;
